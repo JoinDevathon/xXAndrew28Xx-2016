@@ -1,6 +1,6 @@
 package me.andrew28.machines;
 
-import me.andrew28.machines.model.Machine;
+import me.andrew28.machines.machines.Machine;
 
 import java.util.HashMap;
 
@@ -10,7 +10,9 @@ import java.util.HashMap;
 public class MachineManager {
     private static HashMap<String, Machine> machines = new HashMap<>();
 
-    public static void init(){}
+    public static void init(){
+
+    }
 
 
     public static void registerMachine(String codeName, Machine machine){
