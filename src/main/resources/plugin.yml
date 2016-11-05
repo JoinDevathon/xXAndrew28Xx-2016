@@ -5,3 +5,8 @@ author: xXAndrew28Xx
 
 main: me.andrew28.machines.Machines
 
+commands:
+  machines:
+    description: Command for the plugin Machines by xXAndrew28Xx
+    aliases: [machine]
+    usage: /machines help
