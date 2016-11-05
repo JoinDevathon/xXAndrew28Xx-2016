@@ -3,6 +3,9 @@ package me.andrew28.machines;
 import me.andrew28.machines.commands.CommandManager;
 import me.andrew28.machines.commands.DefaultExecutor;
 import me.andrew28.machines.core.WorldManager;
+import me.andrew28.machines.machines.defaults.SteamGenerator;
+import me.andrew28.machines.recipes.RecipeManager;
+import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.IOException;
@@ -27,6 +30,9 @@ public class Machines extends JavaPlugin {
 
         //COMMANDS
         getCommand("machines").setExecutor(new DefaultExecutor());
+
+        //EVENTS
+        Bukkit.getPluginManager().registerEvents(new RecipeManager.CustomCrafting(), this);
     }
 
     @Override
