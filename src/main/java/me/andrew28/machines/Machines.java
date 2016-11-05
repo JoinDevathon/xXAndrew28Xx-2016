@@ -2,7 +2,10 @@ package me.andrew28.machines;
 
 import me.andrew28.machines.commands.CommandManager;
 import me.andrew28.machines.commands.DefaultExecutor;
+import me.andrew28.machines.core.WorldManager;
 import org.bukkit.plugin.java.JavaPlugin;
+
+import java.io.IOException;
 
 public class Machines extends JavaPlugin {
     private static Machines instance;
@@ -20,6 +23,7 @@ public class Machines extends JavaPlugin {
         //INITIALIZATION
         CommandManager.init();
         MachineManager.init();
+        WorldManager.init();
 
         //COMMANDS
         getCommand("machines").setExecutor(new DefaultExecutor());
