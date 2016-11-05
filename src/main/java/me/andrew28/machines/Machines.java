@@ -6,7 +6,7 @@ public class Machines extends JavaPlugin {
 
     @Override
     public void onEnable() {
-        // put your enable code here
+        System.out.println("A Devathon Project by xXAndrew28Xx -- andrewtran312@gmail.com");
     }
 
     @Override
