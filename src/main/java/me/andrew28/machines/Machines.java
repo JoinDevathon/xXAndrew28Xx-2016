@@ -1,8 +1,8 @@
-package org.devathon.contest2016;
+package me.andrew28.machines;
 
 import org.bukkit.plugin.java.JavaPlugin;
 
-public class DevathonPlugin extends JavaPlugin {
+public class Machines extends JavaPlugin {
 
     @Override
     public void onEnable() {

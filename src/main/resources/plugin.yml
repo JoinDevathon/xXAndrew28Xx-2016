@@ -1,7 +1,7 @@
-name: Devathon Project
+name: Machines
 description: A project for the Devathon contest
 version: 1.0.0
-author: Your Name Here
+author: xXAndrew28Xx
 
-main: org.devathon.contest2016.DevathonPlugin
+main: me.andrew28.machines.Machines
 

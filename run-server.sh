@@ -49,13 +49,13 @@ while true; do
     else
         mvn clean install
     fi
-    cp target/DevathonProject-1.0-SNAPSHOT.jar server/plugins/DevathonProject-1.0-SNAPSHOT.jar
+    cp target/Machines.jar server/plugins/Machines.jar
     cd server
 
     if [[ $(uname) == MING* ]]; then
         # we're running inside of git bash on windows, which doesn't support everything that unix systems do
         # so just run the jar and ask the user if they want to continue running after it's done
-        java -jar spigot.jar
+        java -jar -Xmx700M spigot.jar
 
         read -n 1 -p "Do you want to recompile and restart the server? (y/n) " value
         if [ "$value" == "n" ]; then
