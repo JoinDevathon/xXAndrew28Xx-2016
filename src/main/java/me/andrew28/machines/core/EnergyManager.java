@@ -91,7 +91,11 @@ public class EnergyManager {
             }
         }
     }
-
+    public static void setEnergy(Block b, int amount){
+        if (canReceiveEnergyBlock(b)){
+            blocks.put(b, amount);
+        }
+    }
     public static List<Block> getTouchingCanPowered(Block b){
         ArrayList<Block> canPower = new ArrayList<Block>();
         BlockFace[] bfs = new BlockFace[]{

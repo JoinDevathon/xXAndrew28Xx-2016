@@ -13,7 +13,6 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.inventory.ItemStack;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -87,6 +86,9 @@ public class PowerBank implements PoweredMachine, TickableMachine {
 
     @Override
     public void tick(Block block) {
+        if (block == null){
+            return;
+        }
         List<Block> canPower = EnergyManager.getTouchingCanPowered(block);
         if (canPower.size() == 0){
             return;
@@ -94,7 +96,10 @@ public class PowerBank implements PoweredMachine, TickableMachine {
         Iterator<Block> it = canPower.iterator();
         while(it.hasNext()){
             Block b = it.next();
-            if (MachineManager.getBlockMachine(b) == this){
+            if (MachineManager.getBlockMachine(b) == null){
+                continue;
+            }
+            if (MachineManager.getBlockMachine(b).getCodeName().equals("POWER_BANK")){
                 it.remove();
             }
         }
@@ -105,5 +110,7 @@ public class PowerBank implements PoweredMachine, TickableMachine {
         for (Block b : canPower){
             EnergyManager.addEnergy(b, powerLevel);
         }
+        energy.put(block, 0); //DRAINED
+        EnergyManager.setEnergy(block, 0); //DRAINED
     }
 }

@@ -37,13 +37,13 @@ public class SteamGenerator implements PowerOutputtingMachine, TickableMachine {
 
     @Override
     public ItemStack getBaseItem() {
-        return ItemStackUtils.glow(new ItemStack(Material.FURNACE));
+        return ItemStackUtils.glow(new ItemStack(Material.PISTON_BASE));
     }
 
     @Override
     public ShapedRecipe getRecipe() {
         ShapedRecipe recipe = new ShapedRecipe("XXX","XYX","XXX");
-        recipe.setItem('X', ItemStackUtils.name(new ItemStack(Material.REDSTONE), "ENERGY"));
+        recipe.setItem('X', new ItemStack(Material.REDSTONE));
         recipe.setItem('Y', new ItemStack(Material.FURNACE));
         return recipe;
     }
@@ -97,7 +97,6 @@ public class SteamGenerator implements PowerOutputtingMachine, TickableMachine {
                     continue;
                 }
                 if (ItemStackUtils.isFurnaceFuel(is.getType())){
-                    System.out.println("CORRENT: " + is.getType().name());
                     ItemStack clone = is.clone();
                     clone.setAmount(clone.getAmount() - 1);
                     toRemove = clone;

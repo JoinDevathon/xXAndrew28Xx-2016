@@ -4,6 +4,7 @@ import me.andrew28.machines.core.WorldManager;
 import me.andrew28.machines.machines.Machine;
 import me.andrew28.machines.machines.TickableMachine;
 import me.andrew28.machines.machines.defaults.PowerBank;
+import me.andrew28.machines.machines.defaults.PoweredFurnace;
 import me.andrew28.machines.machines.defaults.SteamGenerator;
 import me.andrew28.machines.recipes.RecipeManager;
 import me.andrew28.machines.util.SerializeUtil;
@@ -31,7 +32,7 @@ public class MachineManager {
     public static void init(){
         registerMachine("STEAM_GENERATOR", new SteamGenerator());
         registerMachine("POWER_BANK", new PowerBank());
-
+        registerMachine("POWER_FURNACE", new PoweredFurnace());
         for (World world : Bukkit.getWorlds()){
             YamlConfiguration config = WorldManager.getWorldMachineConfiguration(world);
             if (config.contains("machines")){
