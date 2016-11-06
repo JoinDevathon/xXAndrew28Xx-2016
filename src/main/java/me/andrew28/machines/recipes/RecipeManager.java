@@ -105,7 +105,7 @@ public class RecipeManager {
             if (e.getRecipe() instanceof org.bukkit.inventory.ShapedRecipe){
                 org.bukkit.inventory.ShapedRecipe bukkitShapedRecipe = (org.bukkit.inventory.ShapedRecipe) e.getRecipe();
                 List<ItemStack> craftItems = new ArrayList<>();
-                for (String row : bukkitShapedRecipe.getShape()){
+                /*for (String row : bukkitShapedRecipe.getShape()){
                     ArrayList<ItemStack> rowItems = new ArrayList<>();
                     for (Character c : row.toCharArray()){
                         if (!bukkitShapedRecipe.getIngredientMap().containsKey(c)){
@@ -114,12 +114,14 @@ public class RecipeManager {
                         rowItems.add(bukkitShapedRecipe.getIngredientMap().get(c));
                     }
                     craftItems.addAll(rowItems);
+                }*/
+                for (ItemStack is : e.getInventory().getMatrix()){
+                    craftItems.add(is);
                 }
                 Boolean valid = false;
                 //
                 outer:
                 for (Map.Entry<ItemStack, Recipe> entry : getAllRecipes()) {
-                    ItemStack result = entry.getKey();
                     Recipe recipe = entry.getValue();
                     if (recipe instanceof ShapedRecipe) {
                         ShapedRecipe shapedRecipe = (ShapedRecipe) recipe;
@@ -149,19 +151,27 @@ public class RecipeManager {
 
                                 //TYPE TEST
                                 if (recipeItem.getType() != craftingItem.getType()){
+                                    //System.out.println("FAIL 3");
                                     break outer;
                                 }
 
                                 //DISPLAY NAME TEST
                                 ItemMeta recipeItemMeta = recipeItem.getItemMeta();
                                 ItemMeta craftingItemMeta = craftingItem.getItemMeta();
-                                if ((recipeItemMeta.getDisplayName() != null) && (craftingItemMeta.getDisplayName() == null)){
+                                if (recipeItemMeta.hasDisplayName() && !craftingItemMeta.hasDisplayName()){
                                     // RECIPE HAS DISPLAY
                                     // CRAFTING DOES NOT HAVE DISPLAY
+                                    /*System.out.println("RECIPE: " + recipeItemMeta.hasDisplayName());
+                                    System.out.println("CRAFTING TYPE:" + craftingItem.getType().name());
+                                    System.out.println("CRAFTING: " + craftingItemMeta.getDisplayName());
+                                    System.out.println("FAIL 1 slot:" + i);*/
                                     break outer;
                                 }else if (recipeItemMeta.hasDisplayName() && craftingItemMeta.hasDisplayName()){
                                     // BOTH HAVE DISPLAY NAME
-                                    if (recipeItemMeta.getDisplayName() != craftingItemMeta.getDisplayName()){
+                                    if (!recipeItemMeta.getDisplayName().equals(craftingItemMeta.getDisplayName())){
+                                        /*System.out.println("RECIPE:  " + recipeItemMeta.getDisplayName());
+                                        System.out.println("CRAFTING TABLE: " + craftingItemMeta.getDisplayName());
+                                        System.out.println("FAIL 2" + " slot: " + i);*/
                                         break outer;
                                     }
                                 }

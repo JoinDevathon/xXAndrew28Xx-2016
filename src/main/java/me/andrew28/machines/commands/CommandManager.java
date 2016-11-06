@@ -1,6 +1,7 @@
 package me.andrew28.machines.commands;
 
 import me.andrew28.machines.commands.defaults.HelpCommand;
+import me.andrew28.machines.commands.defaults.InfoBlockCommand;
 
 import java.util.HashMap;
 import java.util.HashSet;
@@ -15,6 +16,8 @@ public class CommandManager {
 
     public static void init() {
         registerSubCommand("help", new HelpCommand());
+        // TODO : redo arguments
+        registerSubCommand("infoblock", new InfoBlockCommand());
     }
     public static void registerSubCommand(String subArgument, SubCommand subCommand){
         if (subArgumentRegistered(subArgument)){

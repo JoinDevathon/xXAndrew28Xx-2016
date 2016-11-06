@@ -4,6 +4,7 @@ import me.andrew28.machines.commands.CommandManager;
 import me.andrew28.machines.commands.DefaultExecutor;
 import me.andrew28.machines.core.WorldManager;
 import me.andrew28.machines.machines.defaults.SteamGenerator;
+import me.andrew28.machines.machines.listeners.PlaceListener;
 import me.andrew28.machines.recipes.RecipeManager;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -24,20 +25,22 @@ public class Machines extends JavaPlugin {
         System.out.println("A Devathon Project by xXAndrew28Xx -- andrewtran312@gmail.com");
 
         //INITIALIZATION
+        WorldManager.init();
         CommandManager.init();
         MachineManager.init();
-        WorldManager.init();
 
         //COMMANDS
         getCommand("machines").setExecutor(new DefaultExecutor());
 
         //EVENTS
         Bukkit.getPluginManager().registerEvents(new RecipeManager.CustomCrafting(), this);
+        Bukkit.getPluginManager().registerEvents(new PlaceListener(), this);
+
     }
 
     @Override
     public void onDisable() {
-        // put your disable code here
+        MachineManager.saveAll();
     }
 }
 

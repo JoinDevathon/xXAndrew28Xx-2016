@@ -1,9 +1,10 @@
 package me.andrew28.machines.machines.defaults;
 
-import me.andrew28.machines.machines.PoweredMachine;
+import me.andrew28.machines.machines.PowerOutputtingMachine;
 import me.andrew28.machines.recipes.ShapedRecipe;
 import me.andrew28.machines.util.ItemStackUtils;
 import org.bukkit.Material;
+import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Player;
 import org.bukkit.event.block.Action;
@@ -12,20 +13,16 @@ import org.bukkit.inventory.ItemStack;
 /**
  * @author Andrew Tran
  */
-public class SteamGenerator implements PoweredMachine {
-    @Override
-    public void onEnergyChange(Integer level) {
-
-    }
+public class SteamGenerator implements PowerOutputtingMachine {
 
     @Override
     public String getCodeName() {
-        return "COAL_GENERATOR";
+        return "STEAM_GENERATOR";
     }
 
     @Override
     public String getDisplayName() {
-        return "Coal Generator";
+        return "Steam Generator";
     }
 
     @Override
@@ -41,8 +38,15 @@ public class SteamGenerator implements PoweredMachine {
         return recipe;
     }
 
+
+
     @Override
     public void interact(Action action, Player player) {
+
+    }
+
+    @Override
+    public void place(Player player, Block block) {
 
     }
 

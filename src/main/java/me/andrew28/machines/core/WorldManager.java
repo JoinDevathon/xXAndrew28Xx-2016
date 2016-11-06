@@ -35,7 +35,14 @@ public class WorldManager {
     public static File getWorldMachineFile(World w){
         return machineSaveFiles.get(w.getName());
     }
-    public static Configuration getWorldMachineConfiguration(World w){
+    public static YamlConfiguration getWorldMachineConfiguration(World w){
         return YamlConfiguration.loadConfiguration(getWorldMachineFile(w));
+    }
+    public static void saveWorldMachineConfiguration(World w, YamlConfiguration config){
+        try {
+            config.save(getWorldMachineFile(w));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
