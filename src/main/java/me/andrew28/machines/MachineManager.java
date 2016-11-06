@@ -3,6 +3,7 @@ package me.andrew28.machines;
 import me.andrew28.machines.core.WorldManager;
 import me.andrew28.machines.machines.Machine;
 import me.andrew28.machines.machines.TickableMachine;
+import me.andrew28.machines.machines.defaults.EnergyPipe;
 import me.andrew28.machines.machines.defaults.PowerBank;
 import me.andrew28.machines.machines.defaults.PoweredFurnace;
 import me.andrew28.machines.machines.defaults.SteamGenerator;
@@ -33,6 +34,7 @@ public class MachineManager {
         registerMachine("STEAM_GENERATOR", new SteamGenerator());
         registerMachine("POWER_BANK", new PowerBank());
         registerMachine("POWER_FURNACE", new PoweredFurnace());
+        registerMachine("ENERGY_PIPE", new EnergyPipe());
         for (World world : Bukkit.getWorlds()){
             YamlConfiguration config = WorldManager.getWorldMachineConfiguration(world);
             if (config.contains("machines")){
