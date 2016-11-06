@@ -2,6 +2,8 @@ package me.andrew28.machines;
 
 import me.andrew28.machines.core.WorldManager;
 import me.andrew28.machines.machines.Machine;
+import me.andrew28.machines.machines.TickableMachine;
+import me.andrew28.machines.machines.defaults.PowerBank;
 import me.andrew28.machines.machines.defaults.SteamGenerator;
 import me.andrew28.machines.recipes.RecipeManager;
 import me.andrew28.machines.util.SerializeUtil;
@@ -9,7 +11,6 @@ import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.block.Block;
-import org.bukkit.configuration.Configuration;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.inventory.ItemStack;
@@ -24,9 +25,12 @@ import java.util.Map;
 public class MachineManager {
     private static HashMap<String, Machine> machines = new HashMap<>();
     private static HashMap<Block, Machine> blockMachines = new HashMap<>();
+    private static HashMap<String, TickableMachine> tickableMachines = new HashMap<>();
 
+    private static int tickNumber = 0;
     public static void init(){
         registerMachine("STEAM_GENERATOR", new SteamGenerator());
+        registerMachine("POWER_BANK", new PowerBank());
 
         for (World world : Bukkit.getWorlds()){
             YamlConfiguration config = WorldManager.getWorldMachineConfiguration(world);
@@ -45,6 +49,22 @@ public class MachineManager {
                 }
             }
         }
+        Bukkit.getScheduler().runTaskTimer(Machines.getInstance(), () -> {
+            tickNumber++;
+            for (Map.Entry<Block, Machine> entry : blockMachines.entrySet()){
+                Machine machine = entry.getValue();
+                if (machine instanceof TickableMachine){
+                    try{
+                        if (tickNumber % ((TickableMachine) machine).tickInterval() == 0){
+                            ((TickableMachine) machine).tick(entry.getKey());
+                        }
+                    }catch(Exception e){
+
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }, 0L, 1L);
     }
 
 
@@ -53,12 +73,24 @@ public class MachineManager {
             throw new IllegalArgumentException("Machine " + codeName + " is already registered");
         }
         machines.put(codeName, machine);
+        ItemStack is = getItem(machine);
+        machine.getRecipe().registerBukkit(is);
+        RecipeManager.registerRecipe(is, machine.getRecipe());
+
+        if (machine.getListener() != null){
+            Bukkit.getPluginManager().registerEvents(machine.getListener(), Machines.getInstance());
+        }
+
+        if (machine instanceof TickableMachine){
+            tickableMachines.put(codeName, (TickableMachine) machine);
+        }
+    }
+    public static ItemStack getItem(Machine machine){
         ItemStack is = machine.getBaseItem();
         ItemMeta im = is.getItemMeta();
         im.setDisplayName(machine.getDisplayName());
         is.setItemMeta(im);
-        machine.getRecipe().registerBukkit(is);
-        RecipeManager.registerRecipe(is, machine.getRecipe());
+        return is;
     }
     public static void setBlockMachine(Block b, Machine machine){
         blockMachines.put(b, machine);

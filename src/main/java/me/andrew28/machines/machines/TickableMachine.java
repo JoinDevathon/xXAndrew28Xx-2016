@@ -5,6 +5,7 @@ import org.bukkit.block.Block;
 /**
  * @author Andrew Tran
  */
-public interface PoweredMachine extends Machine{
-    void onEnergyChange(Integer level, Block block);
+public interface TickableMachine extends Machine{
+    int tickInterval();
+    void tick(Block block);
 }
